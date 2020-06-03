@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 <template>
   <div id="app">
 <rbc-layout
@@ -21,34 +20,13 @@
 <script>
 import 'rbc-wm-framework-vuejs/dist/wm/vendors/';
 import 'rbc-wm-framework-vuejs/dist/wm/';
-// import Header from './components/Header';
-// import Search from './components/Search';
 import { Layout } from 'rbc-wm-framework-vuejs/dist/wm/components';
-// import axios from 'axios';
-
-window.axios = require('axios');
 
 export default {
   name: 'App',
   components: {
-    // 'rbc-header': Header,
     'rbc-layout': Layout
-   // 'rbc-search': Search
   },
-  // created() {
-  //   axios.get('https://content.rbcgam.com/funds/list?short=true&active=true&orderby=fundName&ordered=asc')
-  //     .then(response => this.funds = response.data)
-
-  //     //.catch(error => this.funds = [{rbcFundCode: 'NO POSTS FOUND'}])
-  //     //.finally(() => console.log("Data loading complete:)"));
-
-  // //     .then(response => console.log(response.data));
-  // },
-  // data() {
-  //   return {
-  //     funds: null
-  // };
-//},
 }
 </script>
 
