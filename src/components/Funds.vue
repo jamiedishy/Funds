@@ -2,6 +2,7 @@
 <template>
     <div class="container">
         <div class="row">
+             <rbc-header />
             <div class="col-md-12 mb-5">
                 <div class="row mb-3">
                     <div class="col-sm-8 mt-1">
@@ -25,7 +26,7 @@
 
                 <rbc-tab flush>
                     <rbc-tab-content name="Overview">
-                        <rbc-table class="table table-striped table-compact">
+                        <table class="table table-striped table-compact">
 							<thead>
 								<tr>
 									<th>
@@ -55,10 +56,12 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr :key="fund" v-for="fund in filteredList">
-									<td class="text-nowrap">
-                                        {{"RBF" + fund.rbcFundCode}}
-									</td>	
+								<tr :key="fund.id" v-for="fund in filteredList">
+                                        <td class="text-nowrap">
+                                            <router-link :to="{ name: 'fund-show', params: { rbcFundCode: fund.rbcFundCode } }">
+                                                {{"RBF" + fund.rbcFundCode}}
+                                            </router-link>
+                                        </td>
                                     <td>
                                         {{fund.fundName}}
 									</td>	
@@ -82,7 +85,7 @@
 									</td>
 								</tr>
 							</tbody>
-						</rbc-table>
+						</table>
                     </rbc-tab-content>
                 </rbc-tab>
             </div>
@@ -93,8 +96,9 @@
 <script>
 // maps vuex to our component
 import { mapGetters, mapActions } from 'vuex';
-import { Tab, TabContent, Table } from 'rbc-wm-framework-vuejs/dist/wm/components';
+import { Tab, TabContent } from 'rbc-wm-framework-vuejs/dist/wm/components';
 import { Input } from 'rbc-wm-framework-vuejs/dist/wm/components';
+import Header from './Header';
 
 export default {
     name: 'Funds',
@@ -102,7 +106,7 @@ export default {
         'rbc-tab': Tab,
         'rbc-tab-content': TabContent,
         'rbc-input': Input,
-        'rbc-table': Table
+        'rbc-header': Header
     },
     props: ["funds"],
     data() {

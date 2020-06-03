@@ -14,7 +14,6 @@
 </template>
 
 <script>
-//import { TopNav } from 'rbc-wm-framework-vuejs/dist/wm/components';
 export default {
     name: 'Header',
     components: {

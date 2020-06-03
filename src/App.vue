@@ -2,16 +2,14 @@
 <template>
   <div id="app">
 <rbc-layout
-        :top-nav="topNav"
+        :top-nav="true"
         logo="https://rbcwm-styleguide.azurewebsites.net/src/assets/rbc-wm-logo-en.svg" 
 			>
       <div class="container" 
 				slot="content">
 				<div class="row">
 					<div class="col-md-12">
-            <rbc-header />
-            <!-- <rbc-search :funds="funds" /> -->
-            <rbc-funds />
+            <router-view /> 
 					</div>
 				</div>
 			</div>
@@ -23,8 +21,7 @@
 <script>
 import 'rbc-wm-framework-vuejs/dist/wm/vendors/';
 import 'rbc-wm-framework-vuejs/dist/wm/';
-import Header from './components/Header';
-import Funds from './components/Funds';
+// import Header from './components/Header';
 // import Search from './components/Search';
 import { Layout } from 'rbc-wm-framework-vuejs/dist/wm/components';
 // import axios from 'axios';
@@ -34,8 +31,7 @@ window.axios = require('axios');
 export default {
   name: 'App',
   components: {
-    'rbc-funds': Funds,
-    'rbc-header': Header,
+    // 'rbc-header': Header,
     'rbc-layout': Layout
    // 'rbc-search': Search
   },
