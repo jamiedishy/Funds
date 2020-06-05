@@ -2,7 +2,15 @@ import axios from 'axios';
 
 const state = {
     funds: [],
-    oneFund: []
+    oneFund: null,
+    fundName: null,
+    topHoldings: null,
+    assetMix: null,
+    series: null,
+    dailyNav: null,
+    inceptionDate: null,
+    adjustedMER: null,
+    isActive: null
 };
 
 const getters = {
@@ -11,23 +19,33 @@ const getters = {
 };
 
 // makes request, gets response, then calls mutation bc we use commit to make mutation... dont clal mutation directly
-
 const actions = {
     async fetchFunds( { commit }) {
         const response = await axios.get('https://content.rbcgam.com/funds/list?short=true&active=true&orderby=fundName&ordered=asc');
-        commit('setFunds', response.data);
+        commit('SET_FUNDS', response.data);
         //console.log(response.data);
     },
     async getFund( { commit }, rbcFundCode) {
         const response = await axios.get('https://content.rbcgam.com/funds/detail?rbcFundCode=' + rbcFundCode);
-        commit('showFund', response.data);
+        // console.log(response.data);
+        // uppercase and underscore
+        commit('SHOW_FUND', response.data);
     }
-
 }; 
 
 const mutations = {
-    setFunds: (state, funds) => (state.funds = funds),
-    showFund: (state, oneFund) => (state.oneFund = oneFund)
+    SET_FUNDS: (state, funds) => (state.funds = funds),
+    SHOW_FUND: (state, oneFund) => {
+        state.oneFund = oneFund;
+        state.topHoldings = oneFund.topHoldings;
+        state.assetMix = oneFund.assetMix;
+        state.series = oneFund.series;
+        state.dailyNav = oneFund.dailyNav;
+        state.inceptionDate = oneFund.inceptionDate;
+        state.adjustedMER = oneFund.adjustedMER;
+        state.isActive = oneFund.isActive;
+        state.fundName = oneFund.fundName;
+    }
 };
 
 export default {

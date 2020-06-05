@@ -12,7 +12,7 @@ const routes = [
     component: Funds,
   },
   {
-    path: "/:rbcFundCode",
+    path: "/fund/:rbcFundCode",
     name: "fund-show",
     component: FundShow,
     props: true

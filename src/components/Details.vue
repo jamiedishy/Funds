@@ -4,19 +4,20 @@
             <h2 class="my-2">Details</h2>
             <rbc-card>
                 <div slot="header">
+                  <!-- <h1>{{funds.oneFund}}</h1> -->
                     <h3>Details</h3>
                 </div>
                 <div>
                 <ul class="list-divider-condensed">
-                    <li class="list-divider-item">Series: {{oneFund.series}}</li>
-                    <li class="list-divider-item">NAV $: {{recentDailyNav(oneFund.dailyNav)}}</li>
-                    <li class="list-divider-item">Inception date: {{formatDate(oneFund.inceptionDate)}}</li>
-                    <li class="list-divider-item">MER %: asset/annual cost = MER, {{JSON.stringify(oneFund.adjustedMER) === 'null' ? 'N/A' : oneFund.adjustedMER}}</li>
+                    <li class="list-divider-item">Series: {{series}}</li>
+                    <li class="list-divider-item">NAV $: {{dailyNav ? recentDailyNav(dailyNav): 'N/A'}}</li>
+                    <!-- <li class="list-divider-item">Inception date: {{inceptionDate? formatDate(inceptionDate) : 'N/A'}}</li> -->
+                    <li class="list-divider-item">MER %: asset/annual cost = MER, {{JSON.stringify(adjustedMER) === 'null' ? 'N/A' : adjustedMER}}</li>
                     <li class="list-divider-item">Capital gains distribution: Annually</li>
                     <li class="list-divider-item">Fund category (CIFSC): to update</li>
                     <li class="list-divider-item">Minimum investment $: to update</li>
                     <li class="list-divider-item">Subsequent investment $: to update</li>
-                    <li class="list-divider-item">Sales status: {{JSON.stringify(oneFund.isActive) === 'true' ? 'Open': 'Closed'}}</li>
+                    <li class="list-divider-item">Sales status: {{JSON.stringify(isActive) === 'true' ? 'Open': 'Closed'}}</li>
                 </ul>
                 </div>
             </rbc-card>
@@ -28,21 +29,24 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapState } from "vuex";
 import { Card } from 'rbc-wm-framework-vuejs/dist/wm/components';
 
 export default {
-    name: "PortfolioAnalysis",
+    name: "Details",
     components: {
         'rbc-card': Card
     },
-    props: ["rbcFundCode"],
     computed: {
-    ...mapGetters(["oneFund"])
+    ...mapState({
+      series: state => state.funds.series,
+      dailyNav: state => state.funds.dailyNav,
+      inceptionDate: state => state.funds.dailyNav,
+      adjustedMER: state => state.funds.adjustedMER,
+      isActive: state => state.funds.isActive
+    })
     },
     methods: {
-      ...mapActions(["getFund"]),
-
       formatDate(date) {
         const monthNames = ["", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         let updatedDate = date.split('-');
@@ -55,15 +59,7 @@ export default {
         var lastVal = (lastVal=Object.values(dnav))[lastVal.length-1];
         return lastVal + " as of " + lastKey;
       }
-    },
-    created() {
-      this.fund = this.getFund(this.rbcFundCode);
-    },
-    data() {
-      return {
-        fund: {}
-      }
-  }
+   }
 }
 </script>
 

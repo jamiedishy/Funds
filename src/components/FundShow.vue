@@ -3,8 +3,9 @@
         <div class="row">
             <div class="col-md-12 my-5">
                 <header>
-                    <h1>{{ oneFund.fundName }}</h1>
-                    <h3>Fund code: RBF{{ oneFund.rbcFundCode }}</h3>
+                    <!-- <h1>{{getFundById(rbcFundCode)}}</h1> -->
+                    <h1>{{ fundName }}</h1>
+                    <h3>Fund code: RBF{{ rbcFundCode }}</h3>
                     <router-link :to="{ name: 'funds' }">
 					<rbc-button 
                         class="mb-2"
@@ -16,11 +17,11 @@
                     <hr class="my-2">
                 </header>
 
-                <details-card :rbcFundCode="rbcFundCode" />
+                <details-card />
 
-                <port-analysis :rbcFundCode="rbcFundCode" />
+                <port-analysis />
                 
-                <top-holdings :rbcFundCode="rbcFundCode" />
+                <top-holdings />
 
             </div>
         </div>
@@ -28,7 +29,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
 import { Button } from 'rbc-wm-framework-vuejs/dist/wm/components';
 import PortfolioAnalysis from './PortfolioAnalysis';
 import TopHoldings from './TopHoldings';
@@ -44,11 +45,14 @@ export default {
     },
     props: ["rbcFundCode"],
     computed: {
-    ...mapGetters(["oneFund"])
+        ...mapState({
+            fundName: state => state.funds.fundName,
+            fundCode: state => state.funds.fundCode
+        })
     },
     methods: {
       ...mapActions(["getFund"])
-    },
+     },
     created() {
       this.fund = this.getFund(this.rbcFundCode);
     },
@@ -56,7 +60,7 @@ export default {
       return {
         fund: {}
       }
-  }
+    }
 }
 </script>
 

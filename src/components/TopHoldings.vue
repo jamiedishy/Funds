@@ -16,7 +16,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr :key="obj.id" v-for="obj in oneFund.topHoldings">
+                        <tr :key="obj.id" v-for="obj in topHoldings">
                             <td class="text-nowrap">
                                 {{ obj.key }} 
                             </td>
@@ -29,39 +29,27 @@
                     </rbc-tab-content>
                 </rbc-tab>
                 </div>
-                <div class="col-md-12">
-                <hr class="my-2">
-            </div>
   
     </div>
  
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapState } from "vuex";
 import { Tab, TabContent } from 'rbc-wm-framework-vuejs/dist/wm/components';
 
 export default {
-    name: "PortfolioAnalysis",
+    name: "TopHoldings",
     components: {
         'rbc-tab': Tab,
         'rbc-tab-content': TabContent
     },
-    props: ["rbcFundCode"],
     computed: {
-    ...mapGetters(["oneFund"])
-    },
-    methods: {
-      ...mapActions(["getFund"])
-    },
-    created() {
-      this.fund = this.getFund(this.rbcFundCode);
-    },
-    data() {
-      return {
-        fund: {}
-      }
-  }
+    //...mapState("funds.state", ["oneFund"]),
+    ...mapState({
+        topHoldings: state => state.funds.topHoldings
+    }),
+    }
 }
 </script>
 

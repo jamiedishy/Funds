@@ -3,7 +3,7 @@
       <div class="col-md-6 mb-3">
         <h2 class="my-2">Portfolio analysis</h2>
         <div class="well">
-          <ul class="list-highlight" v-for="asset in oneFund.assetMix" :key="asset.id">
+          <ul class="list-highlight" v-for="asset in assetMix" :key="asset.id">
             <li>{{ formatAssetKey(asset.key) }}: {{asset.value}}</li>
           </ul>
         </div>
@@ -16,22 +16,21 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapState } from "vuex";
 
 export default {
     name: "PortfolioAnalysis",
     components: {
     },
-    props: ["rbcFundCode"],
     computed: {
-    ...mapGetters(["oneFund"])
+    ...mapState({
+      assetMix: state => state.funds.assetMix
+    })
     },
     methods: {
-      ...mapActions(["getFund"]),
 
       formatAssetKey(key) {
         let newKey = key;
-        console.log(newKey);
         if (newKey === 'Cdn Equity') {
           newKey = 'Canadian Equity';
         }
@@ -40,15 +39,7 @@ export default {
         }
         return newKey;
       }
-    },
-    created() {
-      this.fund = this.getFund(this.rbcFundCode);
-    },
-    data() {
-      return {
-        fund: {}
-      }
-  }
+    }
 }
 </script>
 
