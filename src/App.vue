@@ -13,7 +13,6 @@
 				</div>
 			</div>
 		</rbc-layout>
-
   </div>
 </template>
 
@@ -26,7 +25,7 @@ export default {
   name: 'App',
   components: {
     'rbc-layout': Layout
-  },
+  }
 }
 </script>
 

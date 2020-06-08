@@ -46,20 +46,14 @@ export default {
     props: ["rbcFundCode"],
     computed: {
         ...mapState({
-            fundName: state => state.funds.fundName,
-            fundCode: state => state.funds.fundCode
+            fundName: state => state.funds.fundName
         })
     },
     methods: {
       ...mapActions(["getFund"])
      },
     created() {
-      this.fund = this.getFund(this.rbcFundCode);
-    },
-    data() {
-      return {
-        fund: {}
-      }
+        this.getFund(this.rbcFundCode);
     }
 }
 </script>

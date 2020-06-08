@@ -6,11 +6,11 @@
             <div class="col-md-12 mb-5">
                 <div class="row mb-3">
                     <div class="col-sm-8 mt-1">
-                        <template v-if="filteredList.length === allFunds.length">
-                            <p class="h3 header-alt">Showing {{allFunds.length}} mutual funds</p>
+                        <template v-if="filtered.length === funds.length">
+                            <p class="h3 header-alt">Showing {{funds.length}} mutual funds</p>
                         </template>
                         <template v-else>
-                            <p class="h3 header-alt">Showing {{filteredList.length}} of {{allFunds.length}} mutual funds</p>
+                            <p class="h3 header-alt">Showing {{filtered.length}} of {{funds.length}} mutual funds</p>
                         </template>
                     </div>
                     <div class="col-sm-4">
@@ -20,7 +20,8 @@
                         placeholder="Search by fund code or fund name"
                         class="text-right"
                         label="Search fund" 
-                    />
+                        @input="filterFunds"
+                    /> 
                     </div>
                 </div>
 
@@ -56,7 +57,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr :key="fund.id" v-for="fund in filteredList">
+								<tr :key="fund.id" v-for="fund in filtered">
                                         <td class="text-nowrap">
                                             <router-link :to="{ name: 'fund-show', params: { rbcFundCode: fund.rbcFundCode } }">
                                                 {{"RBF" + fund.rbcFundCode}}
@@ -95,7 +96,7 @@
 
 <script>
 // maps vuex to our component
-import { mapGetters, mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import { Tab, TabContent } from 'rbc-wm-framework-vuejs/dist/wm/components';
 import { Input } from 'rbc-wm-framework-vuejs/dist/wm/components';
 import Header from './Header';
@@ -108,25 +109,23 @@ export default {
         'rbc-input': Input,
         'rbc-header': Header
     },
-    props: ["funds"],
     data() {
         return {
             search: ''
         }
     },
     computed: {
-        filteredList() {
-            return this.allFunds.filter(post => {
-                return post.fundName.toLowerCase().includes(this.search.toLowerCase())
-            })
-        },
-        ...mapGetters(['allFunds'])
+        ...mapState({
+            filtered: state => state.funds.filtered,
+            funds: state => state.funds.funds
+        })
     },
     methods: {
-        ...mapActions(['fetchFunds'])
+        ...mapActions(['fetchFunds', 'filterFunds'])
     },
     created() {
         this.fetchFunds();
+        this.filterFunds(this.search);
     }
 }
 </script>
