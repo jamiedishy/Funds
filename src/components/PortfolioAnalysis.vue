@@ -28,7 +28,6 @@ export default {
     })
     },
     methods: {
-
       formatAssetKey(key) {
         let newKey = key;
         if (newKey === 'Cdn Equity') {

@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-            <div class="col-md-6 mb-3">
+        <div class="col-md-6 mb-3">
                 <h2 class="my-2">Top Holdings</h2>
             <rbc-tab flush>
                     <rbc-tab-content name="Top 10 underlying investments">
@@ -28,8 +28,7 @@
                 </table>
                     </rbc-tab-content>
                 </rbc-tab>
-                </div>
-  
+        </div>
     </div>
  
 </template>

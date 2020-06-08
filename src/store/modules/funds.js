@@ -18,7 +18,6 @@ const getters = {
     allFunds: state => state.funds,
     oneFund: state => state.oneFund,
     filtered: state => state.filtered
-    
 };
 
 // makes request, gets response, then calls mutation bc we use commit to make mutation... dont clal mutation directly
@@ -30,11 +29,29 @@ const actions = {
     },
     async getFund( { commit }, rbcFundCode) {
         const response = await axios.get('https://content.rbcgam.com/funds/detail?rbcFundCode=' + rbcFundCode);
+        console.log('getting one fund first')
         commit('SHOW_FUND', response.data);
     },
     async filterFunds({ commit }, searchWord) {
         commit('FILTER_FUNDS', searchWord);
         // console.log('filtering is second')
+    },
+    async formatDate({ commit }, date) {
+        const monthNames = ["", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        let updatedDate = date.split('-');
+        updatedDate.unshift(updatedDate.pop());
+        updatedDate = monthNames[parseInt(updatedDate[2], 10)] + " " + updatedDate[1];
+        commit('FORMAT_DATE', updatedDate);
+    },
+    async recentDailyNav({ commit }, dailyNav) {
+        let placeHolder = dailyNav;
+       // console.log(this.oneFund.dailyNav)
+        console.log('in the action this is the start of placeholder ' + placeHolder)
+        let lastKey = (lastKey=Object.keys(placeHolder))[lastKey.length-1];
+        let lastVal = (lastVal=Object.values(placeHolder))[lastVal.length-1];
+        placeHolder = lastVal + " as of " + lastKey
+        commit('RECENT_DAILY_NAV', placeHolder);
+        console.log('in the action this is the result of placeholder ' + placeHolder)
     }
 }; 
 
@@ -58,6 +75,12 @@ const mutations = {
         state.filtered = state.funds.filter(post => {
             return post.fundName.toLowerCase().includes(searchWord.toLowerCase())
         })
+    },
+    FORMAT_DATE: (state, date) => {
+        state.inceptionDate = date
+    },
+    RECENT_DAILY_NAV: (state, dailyNav) => {
+        state.dailyNav = dailyNav;
     }
 };
 
