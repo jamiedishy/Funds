@@ -1,7 +1,7 @@
 <template>
     <div class="row">
       <div class="col-md-6 mb-3">
-        <h2 class="my-2">Portfolio analysis</h2>
+        <h2 class="my-2">Pportfolio analysis</h2>
         <div class="well">
           <ul class="list-highlight" v-for="asset in assetMix" :key="asset.id">
             <li>{{ formatAssetKey(asset.key) }}: {{asset.value}}</li>
