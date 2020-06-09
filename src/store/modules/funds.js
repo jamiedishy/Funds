@@ -11,7 +11,8 @@ const state = {
     inceptionDate: null,
     adjustedMER: null,
     isActive: null,
-    filtered: null
+    filtered: null,
+    myFunds: []
 };
 
 const getters = {
@@ -54,6 +55,12 @@ const actions = {
         placeHolder = lastVal + " as of " + lastKey
         commit('RECENT_DAILY_NAV', placeHolder);
         console.log('in the action this is the result of placeholder ' + placeHolder)
+    },
+    async addMyFund({ commit }) {
+        commit("ADD_MY_FUND")
+    },
+    async deleteMyFund({ commit }, index) {
+        commit("DELETE_MY_FUND", index)
     }
 }; 
 
@@ -83,6 +90,14 @@ const mutations = {
     },
     RECENT_DAILY_NAV: (state, dailyNav) => {
         state.dailyNav = dailyNav;
+    },
+    ADD_MY_FUND: (state) => {
+        state.myFunds.push(state.oneFund.fundName);
+        alert("Your fund was added! " + state.oneFund.fundName);
+    },
+    DELETE_MY_FUND: (state, index) => {
+        state.myFunds.splice(index, 1);
+        alert("Your fund was deleted!");
     }
 };
 

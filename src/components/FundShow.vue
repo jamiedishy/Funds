@@ -6,6 +6,8 @@
                     <!-- <h1>{{getFundById(rbcFundCode)}}</h1> -->
                     <h1>{{ fundName }}</h1>
                     <h3>Fund code: RBF{{ rbcFundCode }}</h3>
+                    <div class="row">
+                    <div class="col-md-8">
                     <router-link :to="{ name: 'funds' }">
 					<rbc-button 
                         class="mb-2"
@@ -14,6 +16,19 @@
                         Back
                     </rbc-button>
                     </router-link>
+                    </div>
+                    <div class="col-md-4">
+                    <router-link :to="{ name: 'my-funds' }">
+                     <rbc-button 
+                        @click="addMyFund"
+                        class="mb-2"
+                        color="primary"
+                        outline>
+                        Add to my funds
+                    </rbc-button>
+                    </router-link>
+                    </div>
+                    </div>
                     <hr class="my-2">
                 </header>
 
@@ -50,7 +65,7 @@ export default {
         })
     },
     methods: {
-      ...mapActions(["getFund"])
+      ...mapActions(["getFund", "addMyFund"])
      },
     created() {
         this.getFund(this.rbcFundCode);
