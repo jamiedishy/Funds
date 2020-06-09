@@ -44,7 +44,6 @@ export default {
         'rbc-tab-content': TabContent
     },
     computed: {
-    //...mapState("funds.state", ["oneFund"]),
     ...mapState({
         topHoldings: state => state.funds.topHoldings
     }),
