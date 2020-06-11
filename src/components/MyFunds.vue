@@ -37,34 +37,57 @@
                                     </td>
                                     <td >
                                         <rbc-button 
-                                            @click="deleteMyFund(index-1)"
-                                            icon="download" 
+                                            type="danger"
+                                            id="modalToggleButton"
+                                            @click="deleteFundModal(index)" 
                                             size="small"
                                             color="secondary"
-                                            outline>
-                                            Delete
+                                            
+                                        >
+                                            <custom-icon name="alert-triangle" base-class="custom-icon"></custom-icon>
+                                            <span class="ml-1">Delete</span>
                                         </rbc-button>
 									</td>	
 								</tr>
 							</tbody>
 						</table>
+
+                         <rbc-modal
+                            id="basicModal"
+                            :active="modalIsOpen"
+                            title="Deleted!"
+                            :show-button="false"
+                            @toggle="modalIsOpen = false"
+                        >
+                            <p>
+                                You have successfully deleted to the fund. 
+                            </p>
+                        </rbc-modal>
                     </div>
                 </div>
-                
-
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import customIcon from 'vue-icon/lib/vue-feather.esm'
 import { mapState, mapActions } from "vuex";
-import { Button } from 'rbc-wm-framework-vuejs/dist/wm/components';
+import { Button, Modal } from 'rbc-wm-framework-vuejs/dist/wm/components';
+//import { Icon } from '/dist/wm/style-fa.css';
 
 export default {
     name: "MyFunds",
     components: {
-        'rbc-button': Button
+        'rbc-button': Button,
+        'custom-icon': customIcon,
+        'rbc-modal': Modal
+    },
+    data() {
+        return {
+            baseClass: 'v-icon',
+            modalIsOpen: false
+        }
     },
     computed: {
         ...mapState({
@@ -72,7 +95,10 @@ export default {
         })
     },
     methods: {
-        ...mapActions(['deleteMyFund'])
+        ...mapActions(['deleteMyFund']),
+        deleteFundModal(indexToDelete) {
+            this.deleteMyFund(indexToDelete) + (this.modalIsOpen = !this.modalIsOpen);
+        }
       
      },
     created() {
@@ -82,4 +108,9 @@ export default {
 </script>
 
 <style scoped>
+.custom-icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+}
 </style>

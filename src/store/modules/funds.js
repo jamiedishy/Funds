@@ -93,11 +93,9 @@ const mutations = {
     },
     ADD_MY_FUND: (state) => {
         state.myFunds.push(state.oneFund.fundName);
-        alert("Your fund was added! " + state.oneFund.fundName);
     },
     DELETE_MY_FUND: (state, index) => {
         state.myFunds.splice(index, 1);
-        alert("Your fund was deleted!");
     }
 };
 
