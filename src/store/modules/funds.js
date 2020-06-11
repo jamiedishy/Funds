@@ -11,7 +11,8 @@ const state = {
     inceptionDate: null,
     adjustedMER: null,
     isActive: null,
-    filtered: null
+    filtered: null,
+    myFunds: []
 };
 
 const getters = {
@@ -31,27 +32,35 @@ const actions = {
         const response = await axios.get('https://content.rbcgam.com/funds/detail?rbcFundCode=' + rbcFundCode);
         console.log('getting one fund first')
         commit('SHOW_FUND', response.data);
+        this.dispatch('recentDailyNav');
+        this.dispatch('formatDate')
     },
     async filterFunds({ commit }, searchWord) {
         commit('FILTER_FUNDS', searchWord);
         // console.log('filtering is second')
     },
-    async formatDate({ commit }, date) {
+    async formatDate({ commit, state }) {
         const monthNames = ["", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-        let updatedDate = date.split('-');
+        let updatedDate = state.inceptionDate.split('-');
         updatedDate.unshift(updatedDate.pop());
         updatedDate = monthNames[parseInt(updatedDate[2], 10)] + " " + updatedDate[1];
         commit('FORMAT_DATE', updatedDate);
     },
-    async recentDailyNav({ commit }, dailyNav) {
-        let placeHolder = dailyNav;
-       // console.log(this.oneFund.dailyNav)
+    async recentDailyNav({ commit, state }) {
+        let placeHolder = state.dailyNav;
+        //console.log('the value of input dailynav is ' + this.oneFund.dailyNav)
         console.log('in the action this is the start of placeholder ' + placeHolder)
         let lastKey = (lastKey=Object.keys(placeHolder))[lastKey.length-1];
         let lastVal = (lastVal=Object.values(placeHolder))[lastVal.length-1];
         placeHolder = lastVal + " as of " + lastKey
         commit('RECENT_DAILY_NAV', placeHolder);
         console.log('in the action this is the result of placeholder ' + placeHolder)
+    },
+    async addMyFund({ commit }) {
+        commit("ADD_MY_FUND")
+    },
+    async deleteMyFund({ commit }, index) {
+        commit("DELETE_MY_FUND", index)
     }
 }; 
 
@@ -81,6 +90,12 @@ const mutations = {
     },
     RECENT_DAILY_NAV: (state, dailyNav) => {
         state.dailyNav = dailyNav;
+    },
+    ADD_MY_FUND: (state) => {
+        state.myFunds.push(state.oneFund.fundName);
+    },
+    DELETE_MY_FUND: (state, index) => {
+        state.myFunds.splice(index, 1);
     }
 };
 

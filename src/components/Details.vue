@@ -18,6 +18,7 @@
                     <li class="list-divider-item">Subsequent investment $: to update</li>
                     <li class="list-divider-item">Sales status: {{JSON.stringify(isActive) === 'true' ? 'Open': 'Closed'}}</li>
                 </ul>
+                
                 </div>
             </rbc-card>
             </div>
@@ -28,7 +29,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState } from "vuex";
 import { Card } from 'rbc-wm-framework-vuejs/dist/wm/components';
 
 export default {
@@ -44,13 +45,6 @@ export default {
       adjustedMER: state => state.funds.adjustedMER,
       isActive: state => state.funds.isActive
       }),
-    },
-    methods: {
-      ...mapActions(['formatDate', 'recentDailyNav'])
-    },
-    beforeUpdate() {
-      this.recentDailyNav(this.dailyNav);
-      this.formatDate(this.inceptionDate);
     }
 }
 </script>
