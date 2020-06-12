@@ -48,7 +48,6 @@ const actions = {
     },
     async recentDailyNav({ commit, state }) {
         let placeHolder = state.dailyNav;
-        //console.log('the value of input dailynav is ' + this.oneFund.dailyNav)
         console.log('in the action this is the start of placeholder ' + placeHolder)
         let lastKey = (lastKey=Object.keys(placeHolder))[lastKey.length-1];
         let lastVal = (lastVal=Object.values(placeHolder))[lastVal.length-1];

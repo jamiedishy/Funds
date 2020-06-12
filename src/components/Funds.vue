@@ -14,17 +14,16 @@
                         </template>
                     </div>
                     <div class="col-sm-4">
-                     <rbc-input 
+                     <rbc-input
                         type="text" 
                         v-model="search" 
                         placeholder="Search by fund code or fund name"
                         class="text-right"
                         label="Search fund" 
                         @input="filterFunds"
-                    /> 
+                    />
                     </div>
                 </div>
-
                 <rbc-tab flush>
                     <rbc-tab-content name="Overview">
                         <table class="table table-striped table-compact">
@@ -111,7 +110,8 @@ export default {
     },
     data() {
         return {
-            search: ''
+            search: '',
+            loading: false
         }
     },
     computed: {

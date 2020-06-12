@@ -9,6 +9,9 @@
                             class="mb-2"
                             color="primary"
                             outline>
+                            <rbc-icon 
+                                icon="arrow-left"
+                            />
                             Back
                         </rbc-button>
                     </router-link>
@@ -42,27 +45,43 @@
                                             @click="deleteFundModal(index)" 
                                             size="small"
                                             color="secondary"
-                                            
                                         >
-                                            <custom-icon name="alert-triangle" base-class="custom-icon"></custom-icon>
-                                            <span class="ml-1">Delete</span>
+                                            <rbc-icon
+                                                icon="trash-alt" 
+                                            />
+                                            <span>Delete</span>
                                         </rbc-button>
 									</td>	
 								</tr>
 							</tbody>
 						</table>
 
-                         <rbc-modal
-                            id="basicModal"
-                            :active="modalIsOpen"
-                            title="Deleted!"
-                            :show-button="false"
-                            @toggle="modalIsOpen = false"
-                        >
-                            <p>
-                                You have successfully deleted to the fund. 
-                            </p>
-                        </rbc-modal>
+                        <div v-if="!error">
+                            <rbc-modal
+                                id="basicModal"
+                                :active="modalIsOpen"
+                                title="Deleted!"
+                                :show-button="false"
+                                @toggle="modalIsOpen = false"
+                            >
+                                <p>
+                                    You have successfully deleted to the fund. 
+                                </p>
+                            </rbc-modal>
+                        </div>
+                        <div v-else>
+                            <rbc-modal
+                                id="basicModal"
+                                :active="modalIsOpen"
+                                title="Error"
+                                :show-button="false"
+                                @toggle="modalIsOpen = false"
+                            >
+                                <p>
+                                    Error deleting from MyFunds list. 
+                                </p>
+                            </rbc-modal>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -71,33 +90,46 @@
 </template>
 
 <script>
-import customIcon from 'vue-icon/lib/vue-feather.esm'
 import { mapState, mapActions } from "vuex";
-import { Button, Modal } from 'rbc-wm-framework-vuejs/dist/wm/components';
-//import { Icon } from '/dist/wm/style-fa.css';
+import { Button, Modal, Icon } from 'rbc-wm-framework-vuejs/dist/wm/components';
 
 export default {
     name: "MyFunds",
     components: {
         'rbc-button': Button,
-        'custom-icon': customIcon,
-        'rbc-modal': Modal
+        'rbc-modal': Modal,
+        'rbc-icon': Icon
+        
     },
     data() {
         return {
             baseClass: 'v-icon',
-            modalIsOpen: false
+            modalIsOpen: false,
+            error: false
         }
     },
     computed: {
         ...mapState({
-            myFunds: state => state.funds.myFunds
+            myFunds: state => state.funds.myFunds,
+            fundName: state => state.funds.fundName
         })
     },
     methods: {
         ...mapActions(['deleteMyFund']),
         deleteFundModal(indexToDelete) {
-            this.deleteMyFund(indexToDelete) + (this.modalIsOpen = !this.modalIsOpen);
+            try {
+                this.deleteMyFund(indexToDelete);
+                if(this.myFunds.includes(this.fundName)) {
+                    throw 'Error deleting'
+                }
+            } 
+            catch(e) {
+                console.log(e);
+                this.error = true;
+            } 
+            finally {
+                (this.modalIsOpen = !this.modalIsOpen);
+            }
         }
       
      },

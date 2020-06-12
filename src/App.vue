@@ -19,6 +19,10 @@
 <script>
 import 'rbc-wm-framework-vuejs/dist/wm/vendors/';
 import 'rbc-wm-framework-vuejs/dist/wm/';
+import 'rbc-wm-framework-vuejs/dist/wm/style-fa.css';
+//import 'rbc-wm-framework-vuejs/dist/wm/style-fa(.min).css';
+import 'rbc-wm-framework-vuejs/dist/wm/components/style-fa.css';
+import 'rbc-wm-framework-vuejs/dist/wm/components/Core/style-fa.css';
 import { Layout } from 'rbc-wm-framework-vuejs/dist/wm/components';
 
 export default {
@@ -33,5 +37,6 @@ export default {
 @import url('https://fonts.googleapis.com/css?family=Fira+Sans:300,400,400i,500,700|Roboto:300,400,400i,500,700');
 @import url('https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap-grid.min.css');
 @import '../style.css';
+
 
 </style>
