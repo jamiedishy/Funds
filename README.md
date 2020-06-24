@@ -1,4 +1,7 @@
-# stocks
+# Funds
+#### This app displays funds in real time built with Vue.js framework alongside Axios to grab and display data, as well as Vuex for state management.
+
+
 
 ## Project setup
 ```
